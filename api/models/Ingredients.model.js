@@ -2,17 +2,25 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const Ingredients = mongoose.model('Ingredient', new Schema({
-    name: {
+    title: {
         type: String,
         required: true
     },
     desc: String,
-    vegetarian: Boolean,
-    vegan: Boolean,
-    gluten_free: Boolean,
+    vegetarian: {
+        type: Boolean,
+        default: false
+    },
+    vegan: {
+        type: Boolean,
+        default: true
+    },
+    gluten_free: {
+        type: Boolean,
+        default: true
+    },
     kcal: Number,
     nutritional_info: String,
-    img_url: String,
 }, {
     timestamps: {
         createdAt: 'createdAt',

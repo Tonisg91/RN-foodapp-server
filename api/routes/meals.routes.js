@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/:mealid', async ( req, res ) => {
+router.get('/:mealid', async (req, res) => {
     try {
         const { mealid } = req.params
         const meal = await Meals.findById(mealid)
@@ -31,12 +31,32 @@ router.get('/:mealid', async ( req, res ) => {
     }
 })
 
-router.post('/add', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
-        const newMeal = await Meals.create(req.body)
+        await Meals.create(req.body)
         res.sendStatus(201)
     } catch (error) {
         res.status(500).json({message: 'Error creating meal.'})
+    }
+})
+
+router.put('/:mealid', async (req, res) => {
+    try {
+        const { mealid } = req.params
+        await Meals.findByIdAndUpdate(mealid, req.body)
+        res.sendStatus(204)
+    } catch (error) {
+        res.status(500).json({message: 'Error updating meal.'})
+    }
+})
+
+router.delete('/:mealid', async (req, res) => {
+    try {
+        const { mealid } = req.params
+        await Meals.findByIdAndDelete(mealid)
+        res.sendStatus(204)
+    } catch (error) {
+        res.status(500).json({message: 'Error deleting meal.'})
     }
 })
 
