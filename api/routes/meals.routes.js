@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const isAuthenticated = require('../auth')
 const { Meals } = require('../models')
 
 router.get('/', async (req, res) => {
@@ -31,16 +32,17 @@ router.get('/:mealid', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', isAuthenticated, async (req, res) => {
     try {
-        await Meals.create(req.body)
+        const { _id } = req.user
+        await Meals.create({ ...req.body, timestamps: { createdBy: _id }})
         res.sendStatus(201)
     } catch (error) {
         res.status(500).json({message: 'Error creating meal.'})
     }
 })
 
-router.put('/:mealid', async (req, res) => {
+router.put('/:mealid', isAuthenticated, async (req, res) => {
     try {
         const { mealid } = req.params
         await Meals.findByIdAndUpdate(mealid, req.body)
@@ -50,7 +52,7 @@ router.put('/:mealid', async (req, res) => {
     }
 })
 
-router.delete('/:mealid', async (req, res) => {
+router.delete('/:mealid', isAuthenticated, async (req, res) => {
     try {
         const { mealid } = req.params
         await Meals.findByIdAndDelete(mealid)

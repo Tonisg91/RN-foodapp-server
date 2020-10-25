@@ -1,7 +1,7 @@
+const cors = require('cors')
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
-const cors = require('cors')
 
 const app = express()
 app.use(cors())
@@ -16,9 +16,9 @@ mongoose.connect(process.env.MONGO_URI, {
 )
 
 
-const { mealsRoutes, ingredientsRoutes, userRoutes } = require('./routes')
+const { mealsRoutes, ingredientsRoutes, authRoutes } = require('./routes')
 
-app.use('/api/auth', userRoutes)
+app.use('/api/auth', authRoutes)
 app.use('/api/meals', mealsRoutes)
 app.use('/api/ingredients', ingredientsRoutes)
 

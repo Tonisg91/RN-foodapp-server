@@ -1,7 +1,7 @@
 module.exports = {
     mealsRoutes: require('./meals.routes'),
     ingredientsRoutes: require('./ingredients.routes'),
-    userRoutes: require('./users.routes')
+    authRoutes: require('./auth.routes')
     //stepsRoutes: require('./steps.routes'),
     
 }

@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const isAuthenticated = require('../auth')
 const { Ingredients } = require('../models')
 
 router.get('/', async (req, res) => {
@@ -19,7 +20,7 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', isAuthenticated, async (req, res) => {
     try {
         await Ingredients.create(req.body)
         res.sendStatus(201)
@@ -28,7 +29,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.put('/:mealid', async (req, res) => {
+router.put('/:mealid', isAuthenticated, async (req, res) => {
     try {
         const { mealid } = req.params
         await Ingredients.findByIdAndUpdate(mealid, req.body)
@@ -38,7 +39,7 @@ router.put('/:mealid', async (req, res) => {
     }
 })
 
-router.delete('/:mealid', async (req, res) => {
+router.delete('/:mealid', isAuthenticated, async (req, res) => {
     try {
         const { mealid } = req.params
         await Ingredients.findByIdAndDelete(mealid)

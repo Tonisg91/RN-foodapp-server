@@ -12,6 +12,10 @@ const ingredientSubSchema = new Schema({
 }, {_id: false})
 
 const Meals = mongoose.model('Meal', new Schema({
+    user_id: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     title: String,
     desc: String,
     kcal: Number,
@@ -42,10 +46,6 @@ const Meals = mongoose.model('Meal', new Schema({
         timestamps: {
             createdAt: 'createdAt',
             updatedAt: 'updatedAt',
-            createdBy: {
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-            }
         }
     }
 ))
